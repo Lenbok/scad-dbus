@@ -1,0 +1,76 @@
+* OpenSCAD D-Bus control for Emacs
+
+Provides Linux users control of OpenSCAD from within Emacs.
+
+OpenSCAD has the ability to use D-Bus (an Linux IPC mechanism) as an
+input driver, which allows manipulation of the viewport and execution of
+menu commands. Since Emacs also speaks D-Bus, we can execute most of the
+OpenSCAD GUI adjustments without having to switch windows or reach for
+our mouse.
+
+** Installation
+
+First enable DBus in OpenSCAD via:
+: Preferences-> Features -> input-driver-dbus
+: Preferences-> Axes -> DBus
+
+You will see at the bottom of the Axes tab, a =Status:= line that says
+something like =DBusInputDriver (:1.1205) open=
+
+Install =scad-dbus.el= in your load path, and then:
+
+#+BEGIN_SRC lisp
+  (require 'scad-dbus)
+#+END_SRC
+
+An example =hydra= is provided that gives a simple interface for issue
+successive commands to OpenSCAD. You might bind it like this:
+
+#+BEGIN_SRC lisp
+  (define-key scad-mode-map (kbd "C-c o") 'hydra-scad-dbus/body)
+#+END_SRC
+
+If you are using =use-package= and =straight.el=, you might prefer
+something like this:
+
+#+BEGIN_SRC lisp
+  (use-package scad-dbus
+    :after scad-mode
+    :straight (:host github :repo "Lenbok/scad-dbus" :branch "master")
+    :bind (:map scad-mode-map ("C-c o" . 'hydra-scad-dbus/body)))
+#+END_SRC
+
+You can test whether emacs sees OpenSCAD on the D-Bus by executing
+=(scad-dbus-connected)=.
+
+Note that, as of writing, OpenSCAD seems to have a bug where the D-Bus
+interface won't execute commands until after some menu items have
+manually been selected.  See:
+https://github.com/openscad/openscad/issues/3367
+
+** Extensions
+
+Not all of the available OpenSCAD menu items have had emacs functions
+created, just those that I tend to use. The list of all available
+items can be retrieved via:
+
+#+BEGIN_SRC lisp
+  (insert "\n** Commands **\n" (mapconcat 'identity (scad-dbus--call-method "getActions") "\n"))
+#+END_SRC
+
+If you would like to create an emacs function that can interactvely be
+invoked to execute that action, you can use the
+=scad-dbus--action-command= macro, e.g:
+
+#+BEGIN_SRC lisp
+  (scad-dbus--action-command scad-dbus-show-help-about "helpActionAbout")
+#+END_SRC
+
+
+** Alternative
+
+scad-preview https://github.com/zk-phi/scad-preview is another approach
+to previewing OpenSCAD from within emacs. This mode calls the OpenSCAD
+command every time a new preview image is required, with all the
+performance penalty this implies.  On the other hand, it is more
+cross-platform.
