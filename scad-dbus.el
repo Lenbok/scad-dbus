@@ -72,103 +72,16 @@
   (scad-dbus--call-method "action" name))
 
 
-;; You can get the list of available actions via:
-;; (insert "\n** Commands **\n" (mapconcat 'identity (scad-dbus--call-method "getActions") "\n"))
-** Commands **
-fileActionNew
-fileActionOpen
-fileActionClearRecent
-fileActionReload
-fileActionNewWindow
-fileActionOpenWindow
-fileActionClose
-fileActionSave
-fileActionSaveAs
-fileActionSaveAll
-fileActionExportSTL
-fileActionExportOFF
-fileActionExportAMF
-fileActionExport3MF
-fileActionExportDXF
-fileActionExportSVG
-fileActionExportCSG
-fileActionExportImage
-fileShowLibraryFolder
-fileActionQuit
-editActionUndo
-editActionRedo
-editActionCut
-editActionCopy
-editActionPaste
-editActionIndent
-editActionUnindent
-editActionComment
-editActionUncomment
-editActionConvertTabsToSpaces
-editActionToggleBookmark
-editActionNextBookmark
-editActionPrevBookmark
-editActionNextTab
-editActionPrevTab
-editActionCopyViewport
-editActionCopyVPT
-editActionCopyVPR
-editActionCopyVPD
-editActionFind
-editActionFindAndReplace
-editActionFindNext
-editActionFindPrevious
-editActionUseSelectionForFind
-editActionJumpToNextError
-editActionZoomTextIn
-editActionZoomTextOut
-editActionPreferences
-designActionAutoReload
-designActionReloadAndPreview
-designActionPreview
-designActionRender
-designAction3DPrint
-designCheckValidity
-designActionDisplayAST
-designActionDisplayCSGTree
-designActionDisplayCSGProducts
-designActionFlushCaches
-viewActionPreview
-viewActionSurfaces
-viewActionWireframe
-viewActionThrownTogether
-viewActionShowEdges
-viewActionShowAxes
-viewActionShowScaleProportional
-viewActionShowCrosshairs
-viewActionAnimate
-viewActionTop
-viewActionBottom
-viewActionLeft
-viewActionRight
-viewActionFront
-viewActionBack
-viewActionDiagonal
-viewActionCenter
-viewActionViewAll
-viewActionResetView
-viewActionZoomIn
-viewActionZoomOut
-viewActionPerspective
-viewActionOrthogonal
-viewActionHideEditorToolBar
-viewActionHide3DViewToolBar
-viewActionHideEditor
-viewActionHideConsole
-viewActionHideParameters
-helpActionAbout
-helpActionHomepage
-helpActionManual
-helpActionCheatSheet
-helpActionLibraryInfo
-helpActionFontInfo
-
-
+;; Use this to ask OpenSCAD for get the list of available actions
+(defun scad-dbus-list-actions ()
+  "List OpenSCAD action methods to a help buffer."
+  (interactive)
+  (with-help-window "*scad-dbus-output*"
+    (with-current-buffer "*scad-dbus-output*"
+      (insert "** OpenSCAD DBus Action Commands **\n"
+              (mapconcat 'identity
+                         (scad-dbus--call-method "getActions")
+                         "\n")))))
 
 ;; Macros to define interactive commands binding to dbus method calls
 
