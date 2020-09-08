@@ -49,10 +49,12 @@ You can test whether emacs sees OpenSCAD on the D-Bus by executing
 
 *Note:* as of writing, OpenSCAD has some kind of bug where even though
 the D-Bus API is activated (and the above =scad-dbus-connected= reports
-OpenSCAD as being available), it won't initially execute commands. After
-some manual selection of random menu items in the GUI, the API then
-starts to behave (and thus the emacs scad-dbus interface works).  See:
-https://github.com/openscad/openscad/issues/3367
+OpenSCAD as being available), it won't initially execute commands if it
+is started with it's built-in editor hidden. After some manual selection
+of random menu items in the GUI, the API may start to behave (and thus
+the emacs scad-dbus interface works), but the easiest workaround is to
+ensure the built-in editor is visible when starting OpenSCAD (you can
+then hide it).  See: https://github.com/openscad/openscad/issues/3367
 
 
 ** Extensions
@@ -62,7 +64,7 @@ created, just those that I tend to use. The list of all available
 items can be retrieved via:
 
 #+BEGIN_SRC lisp
-  (insert "\n** Commands **\n" (mapconcat 'identity (scad-dbus--call-method "getActions") "\n"))
+  M-x scad-dbus-list-actions
 #+END_SRC
 
 If you would like to create an emacs function that can interactvely be
