@@ -14,7 +14,11 @@ our mouse.
 
 ** Installation
 
-First enable DBus in OpenSCAD via:
+First, make sure you have a version of OpenSCAD built with experimental features enabled. Apparently enabled
+in snapshots http://www.openscad.org/downloads.html#snapshots or if building your self, see
+https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Building_on_Linux/UNIX#Experimental
+
+Then enable DBus in OpenSCAD via:
 : Preferences-> Features -> input-driver-dbus
 : Preferences-> Axes -> DBus
 

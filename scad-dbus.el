@@ -138,18 +138,19 @@
 (scad-dbus--action-command scad-dbus-view-center "viewActionCenter")
 (scad-dbus--action-command scad-dbus-view-zoom-in "viewActionZoomIn")
 (scad-dbus--action-command scad-dbus-view-zoom-out "viewActionZoomOut")
-(scad-dbus--action-command scad-dbus-view-console "viewActionHideConsole")
 (scad-dbus--action-command scad-dbus-view-axes "viewActionShowAxes")
+(scad-dbus--action-command scad-dbus-view-console "windowActionHideConsole")
+(scad-dbus--action-command scad-dbus-view-errors "windowActionHideErrorLog")
 
 
 (defhydra hydra-scad-dbus (:foreign-keys warn)
   "
  View^^                       ^^^^^^^^                Extras^^
  [_a_] all        [_h_][_j_][_k_][_l_] rotate         [_xc_] console    [_xi_] export image
- [_c_] center     [_H_][_J_][_K_][_L_] translate      [_xa_] axes       [_xs_] export STL
- [_t_] top              ^^^^[_u_][_i_] zoom           [_xp_] preview
- [_f_] front                  ^^^^^^^^                [_xr_] render
- [_d_] diagonal            ^^^^^^[_r_] reset
+ [_c_] center     [_H_][_J_][_K_][_L_] translate      [_xe_] error log  [_xs_] export STL
+ [_t_] top              ^^^^[_u_][_i_] zoom           [_xa_] axes
+ [_f_] front                  ^^^^^^^^                [_xp_] preview
+ [_d_] diagonal            ^^^^^^[_r_] reset          [_xr_] render
 "
   ("t" scad-dbus-view-top)
   ("f" scad-dbus-view-front)
@@ -172,6 +173,7 @@
   ("u" scad-dbus-zoom-)
 
   ("xc" scad-dbus-view-console)
+  ("xe" scad-dbus-view-errors)
   ("xa" scad-dbus-view-axes)
   ("xp" scad-dbus-render)
   ("xr" scad-dbus-render)
