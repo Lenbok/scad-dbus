@@ -88,10 +88,10 @@
   `(defun ,command ()
      ,(format "Instructs OpenSCAD to %s the %s axis by %s." method (nth idx '("x" "y" "z")) amount)
      (interactive)
-     ,(append `(scad-dbus--call-method ,method)
-              (make-list idx 0.0)
-              (list amount)
-              (make-list (- 2 idx) 0.0))))
+     (scad-dbus--call-method ,method
+              ,@(make-list idx 0.0)
+              ,amount
+              ,@(make-list (- 2 idx) 0.0))))
 (defmacro scad-dbus--1-axis-command (command method amount)
   `(defun ,command ()
      ,(format "Instructs OpenSCAD to %s by %s." method amount)
